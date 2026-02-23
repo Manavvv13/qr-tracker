@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 // 🔥 Auto-detect backend IP
-const API_BASE = `http://${window.location.hostname}:5000`;
+const API_BASE = import.meta.env.VITE_API_URL;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
