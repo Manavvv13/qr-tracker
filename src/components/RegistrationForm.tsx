@@ -35,7 +35,7 @@ const RegistrationForm = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+      const response = await fetch(`${API_BASE}/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
