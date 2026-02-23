@@ -13,13 +13,13 @@ app.secret_key = os.environ.get("SECRET_KEY", "your_secret_key")
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-app.config["SESSION_COOKIE_SECURE"] = False
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
 
 CORS(app, supports_credentials=True, origins="*")
 
 app.config['UPLOAD_FOLDER'] = 'static/qrs'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///qrtracker.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -54,7 +54,7 @@ def get_local_ip():
         return "127.0.0.1"
 
 def get_base_url():
-    return f"http://{get_local_ip()}:5000"
+    return os.environ.get("BASE_URL")
 
 @app.route('/')
 def home():
@@ -185,5 +185,5 @@ def init():
     return "Tables created.", 200
 
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
+    socketio.run(app)
 
